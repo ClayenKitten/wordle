@@ -1,0 +1,53 @@
+name: Deploy
+
+on:
+  push:
+    branches: 'master'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        env:
+          BASE_PATH: '/${{ github.event.repository.name }}'
+        run: |
+          npm run build
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: production-build
+          path: ./build
+
+  deploy-gh:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Fetch artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: production-build
+          path: build
+      - name: Create .nojekyll
+        working-directory: build
+        run: touch .nojekyll
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build
