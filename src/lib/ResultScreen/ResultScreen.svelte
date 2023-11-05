@@ -57,7 +57,7 @@
             <TheAnswerWas {answer} />
         {/if}
         <div class="buttons">
-            <button on:click={() => dispatch("try_again")}>New Game</button>
+            <button on:click={() => dispatch("try_again")}>NEW GAME</button>
         </div>
     </div>
 </dialog>
@@ -82,10 +82,10 @@
             align-items: stretch;
             width: min(100vw, 400px);
             color: var(--text-color);
-            gap: 40px;
+            gap: 25px;
             > .stats {
                 display: flex;
-                gap: 20px;
+                gap: 10px;
                 > div {
                     flex: 1 50px;
                     display: flex;
@@ -107,16 +107,18 @@
             }
             > .buttons {
                 display: flex;
-                height: 40px;
+                height: 60px;
                 gap: 30px;
-                padding: 0 20px;
+                margin: 0 30px;
+                margin-top: 20px;
                 > button {
                     flex: 1;
+                    box-sizing: border-box;
                     color: var(--text-color);
-                    background-color: var(--correct-color);
-                    border: 0;
+                    background-color: var(--background-color);
+                    border: 3px white solid;
                     border-radius: 25px;
-                    font-size: 14px;
+                    font-size: 16px;
                     font-weight: bold;
                 }
             }
