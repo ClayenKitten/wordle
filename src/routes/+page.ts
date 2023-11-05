@@ -1,9 +1,13 @@
 import type { PageLoad } from "./$types";
 
 export const load: PageLoad = async ({ fetch }) => {
-    const res = await fetch(`list.txt`);
-    const text = await res.text();
-    const word_array = text.split("\n");
+    const _word_list = fetch(`word_list.txt`)
+        .then(a => a.text())
+        .then(a => a.split("\n"));
+    const _answer_list = fetch(`answer_list.txt`)
+        .then(a => a.text())
+        .then(a => a.split("\n"));
+    const [word_list, answer_list] = await Promise.all([_word_list, _answer_list]);
 
-    return { list: word_array };
+    return { word_list, answer_list };
 };

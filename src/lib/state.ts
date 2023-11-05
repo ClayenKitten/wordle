@@ -17,12 +17,22 @@ export class GameState {
     /**
      * Creates a new game.
      * @param wordList An array of the words that are considered correct.
-     * @param answer Answer to the game. If not provided, a random one will be selected from the wordList.
+     * @param answer An answer to the game.
      */
-    public constructor(wordList: string[], answer?: string) {
-        this.answer = (
-            answer ? answer : wordList[Math.floor(Math.random() * wordList.length)]
-        ).toUpperCase();
+    public constructor(wordList: string[], answer: string);
+    /**
+     * Creates a new game.
+     * @param wordList An array of the words that are considered correct.
+     * @param answer A list of all possible answers, from which a random one will be selected.
+     */
+    public constructor(wordList: string[], answer: string[]);
+    public constructor(wordList: string[], answer: string | string[]) {
+        if (typeof answer == "string") {
+            this.answer = answer;
+        } else {
+            this.answer = answer[Math.floor(Math.random() * answer.length)].toUpperCase();
+        }
+
         this.wordList = new Set(wordList);
         this.words = [""];
 
@@ -51,7 +61,7 @@ export class GameState {
         if (this.is_completed || this.is_row_full) return false;
 
         this.current_row += char;
-        this.cells_store.update((cells) => {
+        this.cells_store.update(cells => {
             cells.push({ char, highlight: undefined });
             return cells;
         });
@@ -71,7 +81,7 @@ export class GameState {
         for (let i = 0; i < GameState.wordSize; i++) {
             let answer = this.answer[i];
             let guess = this.current_row[i];
-            this.cells_store.update((cells) => {
+            this.cells_store.update(cells => {
                 let cell = cells[GameState.wordSize * (this.words.length - 1) + i];
                 if (answer == guess) {
                     cell.highlight = "correct";
@@ -82,7 +92,7 @@ export class GameState {
                 }
                 return cells;
             });
-            this._highlights.update((highlights) => {
+            this._highlights.update(highlights => {
                 if (answer == guess) {
                     highlights.set(guess, "correct");
                 } else if (this.answer.includes(guess)) {
@@ -112,7 +122,7 @@ export class GameState {
     public backspace(): boolean {
         if (this.is_completed || this.is_row_empty) return false;
         this.current_row = this.current_row.slice(0, -1);
-        this.cells_store.update((cells) => {
+        this.cells_store.update(cells => {
             cells.pop();
             return cells;
         });

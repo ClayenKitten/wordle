@@ -10,7 +10,7 @@
 
     export let data: PageData;
 
-    let state = new GameState(data.list);
+    let state = new GameState(data.word_list, data.answer_list);
     let stats = new Statistics();
 
     $: cells = state.cells;
@@ -38,7 +38,7 @@
 
     const try_again = () => {
         add_message = undefined;
-        state = new GameState(data.list);
+        state = new GameState(data.word_list, data.answer_list);
     };
 
     const size = { row: GameState.attemptNumber, col: GameState.wordSize };
@@ -61,7 +61,7 @@
             <WordGrid cells={$cells} {size} />
             <Keyboard
                 highlights={$highlights}
-                on:insert={(e) => state.insert(e.detail)}
+                on:insert={e => state.insert(e.detail)}
                 on:confirm={confirm}
                 on:backspace={() => state.backspace()}
             />
