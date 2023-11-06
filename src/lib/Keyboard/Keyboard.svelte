@@ -86,8 +86,8 @@
             height: 58px;
             font-size: 18px;
             font-weight: bold;
-            border: none;
-            padding: none;
+            border: 0;
+            padding: 0;
             border-radius: 5px;
         }
     }
