@@ -6,6 +6,7 @@
     import TheAnswerWas from "./TheAnswerWas.svelte";
     import H1 from "../H1.svelte";
     import type { Statistics } from "$lib/statistics";
+    import StatisticsTrend from "./StatisticsTrend.svelte";
 
     export let cells: GridCell[];
     export let answer: string;
@@ -34,24 +35,7 @@
                 Success!
             {/if}
         </H1>
-        <div class="stats">
-            <div>
-                <b>{stats.played}</b>
-                <span>Played</span>
-            </div>
-            <div>
-                <b>{stats.win_percent}</b>
-                <span>Win %</span>
-            </div>
-            <div>
-                <b>{stats.current_streak}</b>
-                <span>Current Streak</span>
-            </div>
-            <div>
-                <b>{stats.max_streak}</b>
-                <span>Max Streak</span>
-            </div>
-        </div>
+        <StatisticsTrend {stats} />
         <WordGrid {cells} {size} {hide_letters} on:click={() => (hide_letters = !hide_letters)} />
         {#if result == "lost"}
             <TheAnswerWas {answer} />
@@ -83,28 +67,6 @@
             width: min(100vw, 400px);
             color: var(--text-color);
             gap: 25px;
-            > .stats {
-                display: flex;
-                gap: 10px;
-                > div {
-                    flex: 1 50px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 5px;
-                    > b {
-                        display: block;
-                        font-family: sans-serif;
-                        font-size: 40px;
-                    }
-                    > span {
-                        display: block;
-                        font-family: sans-serif;
-                        font-size: 14px;
-                        text-align: center;
-                    }
-                }
-            }
             > .buttons {
                 display: flex;
                 height: 60px;
