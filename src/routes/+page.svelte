@@ -7,11 +7,13 @@
     import ResultScreen from "$lib/ResultScreen/ResultScreen.svelte";
     import H1 from "$lib/H1.svelte";
     import { Statistics } from "$lib/statistics";
+    import { onMount } from "svelte";
 
     export let data: PageData;
 
     let state = new GameState(data.word_list, data.answer_list);
-    let stats = new Statistics();
+    let stats: Statistics;
+    onMount(() => (stats = new Statistics()));
 
     $: cells = state.cells;
     $: highlights = state.highlights;

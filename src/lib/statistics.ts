@@ -1,10 +1,26 @@
 import type { GameResult } from "$lib";
 
+/** Uses local storage for persistence. */
 export class Statistics {
     private games: boolean[] = [];
 
+    /**
+     * Creates new statistics entry.
+     * @param createNew If set to `true`, local storage is overwriten with empty stats.
+     */
+    public constructor(createNew: boolean = false) {
+        let item = localStorage.getItem("statistics");
+        if (createNew || item == null) {
+            let json = JSON.stringify([]);
+            localStorage.setItem("statistics", json);
+            item = json;
+        }
+        this.games = JSON.parse(item);
+    }
+
     public add_result(result: GameResult) {
         this.games.push(result === "won");
+        localStorage.setItem("statistics", JSON.stringify(this.games));
     }
 
     public get played(): number {
