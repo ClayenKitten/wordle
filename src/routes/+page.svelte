@@ -5,9 +5,9 @@
     import type { PageData } from "./$types";
     import Messages from "$lib/Messages.svelte";
     import ResultScreen from "$lib/ResultScreen/ResultScreen.svelte";
-    import H1 from "$lib/H1.svelte";
     import { Statistics } from "$lib/statistics";
     import { onMount } from "svelte";
+    import Header from "./Header.svelte";
 
     export let data: PageData;
 
@@ -56,9 +56,7 @@
             on:try_again={try_again}
         />
     {:else}
-        <header>
-            <H1>WordleSvelte</H1>
-        </header>
+        <Header />
         <main>
             <WordGrid cells={$cells} {size} />
             <Keyboard
@@ -93,13 +91,6 @@
         flex-direction: column;
         align-items: stretch;
         gap: var(--section-spacing);
-    }
-    header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        border-bottom: 1px solid var(--border-color);
-        padding: 20px 0;
     }
     main {
         flex: 1;
