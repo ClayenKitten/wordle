@@ -62,7 +62,7 @@
         flex-direction: column;
         align-items: stretch;
         gap: 8px;
-        margin: 0 10px;
+        margin: 0;
 
         > .row {
             display: flex;

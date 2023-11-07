@@ -17,6 +17,9 @@
 <style lang="scss">
     button {
         flex: 0 1 43px;
+        @media (max-width: 500px) {
+            flex: 1 1 43px;
+        }
 
         &.correct {
             border-color: var(--correct-color);

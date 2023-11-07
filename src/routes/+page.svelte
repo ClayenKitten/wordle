@@ -59,6 +59,7 @@
         <Header />
         <main>
             <WordGrid cells={$cells} {size} />
+            <div class="spacer" />
             <Keyboard
                 highlights={$highlights}
                 on:insert={e => state.insert(e.detail)}
@@ -98,10 +99,17 @@
         flex-direction: column;
         justify-content: start;
         gap: var(--section-spacing);
+
+        .spacer {
+            display: none;
+            @media (max-width: 500px) {
+                display: block;
+                flex: 1;
+            }
+        }
     }
     :global(body) {
         width: 100vw;
-        height: 100vh;
         background-color: var(--background-color);
         margin: 0;
         padding: 0;
